@@ -1,2 +1,2 @@
-# my-first-project
-First project on git
+# About my-first-project on github
+Learning how to use github's interface. 
