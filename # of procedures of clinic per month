@@ -1,11 +1,10 @@
 Select 
         (Count (lab_ops.cycle_kpis.cycle_type)) AS number_of_procedures, 
         lab_ops.cycle_kpis.lab_location,  
-        TO_CHAR (lab_ops.cycle_kpis.lab_date, 'Month YYYY') AS Month, 
+        TO_CHAR
+        (lab_ops.cycle_kpis.lab_date, 'Month YYYY') AS Month, 
         DATE_TRUNC('Month', lab_ops.cycle_kpis.lab_date) 
 from    lab_ops.cycle_kpis
 where 1=1
-[[AND{{lab_location}}]]
-[[AND{{date_range}}]]
 Group by 2, 3, 4
 Order by 4 DESC, 2
