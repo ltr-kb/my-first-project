@@ -1,11 +1,13 @@
 select greatest_number_of_eggs_retrieved,
-       lab_location
+       lab_location, 
+       link
     from(select lab_ops.cycle_kpis.eggs_retrieved AS greatest_number_of_eggs_retrieved,
-            lab_ops.cycle_kpis.lab_location,
-            lab_ops.cycle_kpis.link
-       row_number() over (partition by lab_ops.cycle_kpis.lab_location order by lab_ops.cycle_kpis.eggs_retrieved desc) as ranking
-from lab_ops.cycle_kpis
-where lab_ops.cycle_kpis.eggs_retrieved IS NOT NULL)
-AS ranked_list
+                lab_ops.cycle_kpis.lab_location,
+                lab_ops.cycle_kpis.link,
+                 row_number() over (partition by lab_ops.cycle_kpis.lab_location order by lab_ops.cycle_kpis.eggs_retrieved DESC) as ranking
+from   lab_ops.cycle_kpis
+where  lab_ops.cycle_kpis.eggs_retrieved IS NOT NULL
+AND    lab_ops.cycle_kpis.cycle_type IN ('IVF', 'EGG FREEZING'))
+AS    ranked_list
 where ranking = 1
-order by greatest_number_of_eggs_retrieved desc
+order by greatest_number_of_eggs_retrieved desc, link DESC
